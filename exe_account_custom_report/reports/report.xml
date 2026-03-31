@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
-            <xpath expr="//div[4]/span[1]" position="before">
+            <xpath expr="//div[@id='total']" position="after">
                 <t t-set="num_remitos" t-value="o.stock_picking_ids.mapped('num_remito')" />
                 <div style="margin-top: 20px; font-size:16px;">
                   <t t-if="o.currency_id.name == 'USD'">
