@@ -1,5 +1,6 @@
 import ast
-from odoo.osv.expression import expression
+# from odoo.osv.expression import expression
+from odoo.osv import expression
 from odoo import api, models, fields
 
 
