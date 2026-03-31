@@ -1,5 +1,5 @@
 import ast
-from odoo.osv import expression
+from odoo.osv.expression import expression
 from odoo import api, models, fields
 
 
@@ -25,7 +25,7 @@ class AccountMoveLine(models.Model):
                 domain = [(self._active_name, '=', 1)] + domain
 
         if domain:
-            return expression.expression(domain, self).query
+            return expression(domain, self).query
         else:
             return Query(self.env, self._table, self._table_sql)
 
@@ -43,7 +43,7 @@ class AccountMoveLine(models.Model):
         Rule = self.env['ir.rule']
         domain = Rule._compute_domain(self._name, mode)
         if domain:
-            expression.expression(domain, self.sudo(), self._table, query)
+            expression(domain, self.sudo(), self._table, query)
 
     @api.model
     def _query_get(self, domain=None):
