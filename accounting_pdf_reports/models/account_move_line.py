@@ -2,7 +2,14 @@ import ast
 # from odoo.osv.expression import expression
 # from odoo.osv import expression
 # from odoo.tools import expression
-from odoo.osv.expression import AND, OR, is_leaf
+# from odoo.osv.expression import AND, OR, is_leaf
+
+# SINTAXIS MODERNA
+from odoo.osv.expression import Domain
+domain = Domain.and_([domain1, domain2])
+# O para el caso de OR
+domain = Domain.or_([domain1, domain2])
+
 from odoo import api, models, fields
 
 
