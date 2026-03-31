@@ -4,7 +4,7 @@
         <record model="ir.ui.view" id="exe_view_task_form2_inherit_custom">
             <field name="name">view.task.form2.inherit.custom</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="industry_fsm.project_task_view_form_fsm"/>
+            <field name="inherit_id" ref="industry_fsm.view_task_form2_inherit"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="attributes">
                     <attribute name="required">0</attribute>
@@ -15,7 +15,7 @@
         <record model="ir.ui.view" id="exe_view_task_form2_inherit_custom2">
             <field name="name">exe.view.task.form2.inherit.custom</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="industry_fsm_sale.project_task_view_form_fsm_sale"/>
+            <field name="inherit_id" ref="industry_fsm_sale.view_task_form2_inherit"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="attributes">
                     <attribute name="required">0</attribute>
@@ -28,7 +28,7 @@
         <record id="custom_quick_create_task_form_fsm" model="ir.ui.view">
             <field name="name">project.task.form.quick_create.custom</field>
             <field name="model">project.task</field>
-            <field name="inherit_id" ref="industry_fsm.project_task_view_quick_create_fsm"/>
+            <field name="inherit_id" ref="industry_fsm.quick_create_task_form_fsm"/>
             <field name="arch" type="xml">
                 <field name="partner_id" position="replace">
                         <field name="partner_id" invisible="not is_fsm" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
