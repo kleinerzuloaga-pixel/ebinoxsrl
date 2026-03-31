@@ -91,19 +91,18 @@
                                         <t t-esc="sale_order.client_order_ref if sale_order else ''"/>
                                     </p>
                                 </div>
-  	                        <!-- Valor declarado (SIEMPRE FIJO, sin bordes) -->
-		                    <t t-if="page == pages[-1]">
-		                        <div class="page" style="position: relative;">
-		                            <table style="position: absolute; bottom: -40px; right: 50px; width: 30%; font-size: 12px; border: 1px solid white;">
-		                                <tr>
-		                                    <td style="text-align: right; border: none;">
-		                                        <strong><t t-esc="doc.tipo_moneda.upper()"/>:</strong> 
-		                                        <strong><t t-esc="doc.valor_declarado"/></strong>
-		                                    </td>
-		                                </tr>
-		                            </table>
-		                        </div>
-		                    </t>
+                                <!-- Valor declarado (SIEMPRE FIJO, sin bordes) -->
+                                <div style="position: relative;">
+                                    <table style="position: absolute; bottom: -40px; right: 50px; width: 30%; font-size: 12px; border: 1px solid white;">
+                                        <tr>
+                                            <td style="text-align: right; border: none;">
+                                                <strong><t t-esc="doc.tipo_moneda.upper()"/>:</strong> 
+                                                <strong><t t-esc="doc.valor_declarado"/></strong>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </t>
 
 
                             <!-- Pie de página para numeración -->
