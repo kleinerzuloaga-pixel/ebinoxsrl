@@ -1,0 +1,39 @@
+# --- Odoo Specific ---
+*.conf
+*.log
+/filestore/
+/sessions/
+/dump.sql
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# --- Visual Studio Code / Editors ---
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# --- OS Specific ---
+Thumbs.db
+desktop.ini
