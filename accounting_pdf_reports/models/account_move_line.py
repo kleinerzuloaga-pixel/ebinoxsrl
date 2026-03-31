@@ -1,6 +1,8 @@
 import ast
 # from odoo.osv.expression import expression
-from odoo.tools import expression
+# from odoo.osv import expression
+# from odoo.tools import expression
+from odoo.osv.expression import AND, OR, is_leaf
 from odoo import api, models, fields
 
 
