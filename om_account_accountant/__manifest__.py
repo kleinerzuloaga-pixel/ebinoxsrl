@@ -18,13 +18,13 @@
     'license': 'LGPL-3',
     'support': 'odoomates@gmail.com',
     'depends': [
-        'accounting_pdf_reports',
+        # 'accounting_pdf_reports',
         'om_account_asset',
         'om_account_budget',
-        'om_fiscal_year',
-        'om_recurring_payments',
-        'om_account_daily_reports',
-        'om_account_followup',
+        # 'om_fiscal_year',
+        # 'om_recurring_payments',
+        # 'om_account_daily_reports',
+        # 'om_account_followup',
     ],
     'data': [
         'security/group.xml',

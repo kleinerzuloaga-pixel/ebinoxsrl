@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--  <data>
+
+        <report
+            id="exe_account_custom_report.custom_invoice_with_payments"
+            model="account.move"
+            string="Custom Invoice Report with Payments"
+            report_type="qweb-pdf"
+            name="exe_account_custom_report.custom_invoice_report_template"
+        />
+
+        <template id="exe_account_custom_report.custom_invoice_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-set="print_with_payments" t-value="True"/>
+                    <t t-call="exe_account_custom_report.custom_invoice_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+    </data>-->
+</odoo>

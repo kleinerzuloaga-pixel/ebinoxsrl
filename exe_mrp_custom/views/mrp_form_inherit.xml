@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="exe_mrp_form_custom">
+            <field name="name">mrp.workorder.form.custom</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='duration_expected']" position="after">
+                    <label for="duration_expected_hours"/>
+                    <div class="o_row">
+                        <field name="duration_expected_hours" widget="float_time"/>
+                        <span>horas</span>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='time_ids']//field[@name='duration']" position="after">
+                    <field name="duration_hours" widget="float_time" string="Duración Horas" sum="Duración real Horas"/>
+                </xpath>
+
+            </field>
+        </record>
+
+         <record model="ir.ui.view" id="exe_mrp_work_order_tree_custom">
+            <field name="name">mrp.production.work.order.tree.editable.custom</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+            <field name="arch" type="xml">
+                <field name="duration_expected" position="before"> 
+                    <field name="duration_expected_hours" widget="float_time" sum="Duración esperada Horas"/>
+                </field>
+                <field name="duration" position="before"> 
+                    <field name="duration_hours" widget="float_time" sum="Duración real Horas"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="exe_mrp_routing_workcenter_bom_tree">
+            <field name="name">exe.mrp.routing.workcenter.bom.tree.custom</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_bom_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="time_cycle" position="before"> 
+                    <field name="time_cycle_hours" widget="float_time" sum="Duración (Horas)"/>
+                </field>
+                
+            </field>
+        </record>
+
+    </data>
+</odoo>

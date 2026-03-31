@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Definición del nuevo formato de papel -->
+       <!--
+        <record id="paperformat_remito_sin_header" model="report.paperformat">
+            <field name="name">A4 Sin Header para Remito</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">0</field> 
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>  -->
+        
+       <!-- Plantilla del reporte actualizada desde la UI -->
+        <template id="stock_picking_preprinted_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.basic_layout">
+                        <t t-set="company" t-value="doc.company_id"/>
+                        <div class="page">
+                            <div class="header" style="height: auto; padding-bottom: 5px;">
+                                <div style="position: absolute; top: 169px; left:710px; font-size:10px;">
+                                    <p><strong>FECHA:</strong> <t t-esc="doc.scheduled_date.strftime('%d/%m/%Y %H:%M') if doc.scheduled_date else ''"/></p>
+                                </div>
+                                <!-- Información del cliente -->
+                                <div style="position: absolute; top: 310px; left: 120px;font-size:10px; width:300px;">
+                                    <p style="margin: 3px;margin-top:3px;"><t t-esc="doc.partner_id.name"/></p>
+                                    <p style="margin: 3px;margin-top:3px;"><t t-esc="doc.partner_id.street"/></p>
+                                    <p style="margin: 3px;margin-top:3px;"><t t-esc="doc.partner_id.zip"/> - <t t-esc="doc.partner_id.state_id.name"/> - <t t-esc="doc.partner_id.city"/></p>
+                                    <p style="margin: 3px;margin-top:5px;"><t t-esc="doc.partner_id.vat"/></p>
+                                    <p style="margin: 3px;margin-top:4px;"><t t-esc="doc.partner_id.l10n_ar_afip_responsibility_type_id.name"/></p>
+                                </div> 
+                            </div>
+                            <!-- Contenedor de los productos -->
+                            <div style="font-size: 10px; width: 100%;"> 
+                                <t t-set="max_lines_per_page" t-value="27"/>  <!-- Máximo 27 líneas por página -->
+                                <t t-set="line_count" t-value="0"/>  <!-- Contador de líneas -->
+                                <t t-set="pages" t-value="[]"/>  <!-- Lista de páginas -->
+                                <t t-set="current_page" t-value="[]"/>  <!-- Página actual -->
+
+                                <!-- Iteración sobre los productos del documento -->
+                                <t t-foreach="doc.move_ids_without_package" t-as="line">
+                                    <t t-if="line_count &gt;= max_lines_per_page">
+                                        <t t-set="pages" t-value="pages + [current_page]"/>
+                                        <t t-set="current_page" t-value="[]"/>
+                                        <t t-set="line_count" t-value="0"/>
+                                    </t>
+                                    <t t-set="current_page" t-value="current_page + [line]"/>
+                                    <t t-set="line_count" t-value="line_count + 1"/>
+                                </t>
+                                <t t-if="current_page">
+                                    <t t-set="pages" t-value="pages + [current_page]"/>
+                                </t>
+                                <!-- Generación de la tabla de productos -->
+                                <t t-foreach="pages" t-as="page">
+                                    <table class="table table-sm" style="width: 100%; border-collapse: collapse;">
+                                        <tbody>
+                                            <t t-foreach="page" t-as="line">
+                                                <tr>
+                                                    <td style="min-width: 85px; text-align: left;"><t t-esc="line.product_id.default_code"/></td>
+                                                    <td style="min-width: 65px; text-align: left;"><t t-esc="line.product_id.espesor"/></td>
+                                                    <td style="min-width: 50px; text-align: left;"><t t-esc="line.product_uom_id.name"/></td>
+                                                    <td style="min-width: 240px; text-align: left;"><t t-esc="line.description_picking"/></td>
+                                                    <td style="min-width: 100px; text-align: left;"><t t-esc="line.quantity_done"/></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                    <!-- Salto de página si no es la última página -->
+                                    <t t-if="page != pages[-1]">
+                                        <div style="page-break-before: always;"/>
+                                    </t>
+                                </t>
+                            </div>
+
+                            <!-- Este bloque se ejecuta solo en la última hoja -->
+                            <t t-if="page == pages[-1]">
+                                <!-- Observaciones y Nro de OC -->
+                                <div style="position: relative; page-break-inside: avoid; margin-top: 20px; font-size: 12px; border: none;">
+                                    <p><strong>Observaciones:</strong> <t t-esc="doc.note"/></p>
+                                    <p><strong>Nro de OC:</strong>
+                                        <t t-set="sale_order" t-value="doc.env['sale.order'].search([('name', '=', doc.origin)], limit=1)"/>
+                                        <t t-esc="sale_order.client_order_ref if sale_order else ''"/>
+                                    </p>
+                                </div>
+  	                        <!-- Valor declarado (SIEMPRE FIJO, sin bordes) -->
+		                    <t t-if="page == pages[-1]">
+		                        <div class="page" style="position: relative;">
+		                            <table style="position: absolute; bottom: -40px; right: 50px; width: 30%; font-size: 12px; border: 1px solid white;">
+		                                <tr>
+		                                    <td style="text-align: right; border: none;">
+		                                        <strong><t t-esc="doc.tipo_moneda.upper()"/>:</strong> 
+		                                        <strong><t t-esc="doc.valor_declarado"/></strong>
+		                                    </td>
+		                                </tr>
+		                            </table>
+		                        </div>
+		                    </t>
+
+
+                            <!-- Pie de página para numeración -->
+                            <div class="footer" style="margin-left: 740px; margin-bottom: 130;">
+                                <p>Página <span class="page"/> de <span class="topage"/></p>
+                            </div> 
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <!-- Registro de acción del reporte -->
+        <record id="preprinted_report" model="ir.actions.report">
+            <field name="name">Remito Pre-Impreso</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">exe_preprinted_report.stock_picking_preprinted_report</field>
+            <field name="report_file">exe_preprinted_report.stock_picking_preprinted_report</field>
+            <field name="print_report_name">'Remito - %s' % object.name</field>
+            <field name="binding_model_id" ref="model_stock_picking"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Campos adicionales valor_declarado y tipo_moneda en formulario -->
+        <record id="view_picking_form_inherit_valor_declarado" model="ir.ui.view">
+            <field name="name">stock.picking.form.valor.declarado</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="valor_declarado"/>
+                    <field name="tipo_moneda"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
