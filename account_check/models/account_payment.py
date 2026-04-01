@@ -311,16 +311,17 @@ class AccountPayment(models.Model):
         return res
     
     #Cuenta para cheques propios
-    @api.model
-    def create(self,vals):
-        res = super(AccountPayment, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super(AccountPayment, self).create(vals_list)
         check_method = self.env.ref('account_check.account_payment_method_issue_check')
-        if (not check_method):
+        if not check_method:
             return res
-        if (res.move_id and res.payment_method_id == check_method):
-            for move in res.move_id.line_ids:
-                if(move.credit>0):
-                    move.update({'account_id':res.checkbook_id.account_id.id,'name': ""})
+        for rec in res:
+            if rec.move_id and rec.payment_method_id == check_method:
+                for move in rec.move_id.line_ids:
+                    if move.credit > 0:
+                        move.update({'account_id': rec.checkbook_id.account_id.id, 'name': ""})
         return res
 
     def create_check(self, check_type, operation, bank):

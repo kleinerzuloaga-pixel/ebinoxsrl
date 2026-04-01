@@ -20,15 +20,16 @@ class AccountJournal(models.Model):
     account_third = fields.Many2one('account.account', 'Cuenta para Cheques de Terceros')
     account_holding = fields.Many2one('account.account', 'Cuenta para Cheques Propios')
 
-    @api.model
-    def create(self, vals):
-        rec = super(AccountJournal, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super(AccountJournal, self).create(vals_list)
         issue_checks = self.env.ref(
             'account_check.account_payment_method_issue_check')
-        if (issue_checks in rec.outbound_payment_method_ids and
-                not rec.checkbook_ids):
-            rec._create_checkbook()
-        return rec
+        for rec in records:
+            if (issue_checks in rec.outbound_payment_method_ids and
+                    not rec.checkbook_ids):
+                rec._create_checkbook()
+        return records
 
     def _create_checkbook(self):
         """ Create a check sequence for the journal """

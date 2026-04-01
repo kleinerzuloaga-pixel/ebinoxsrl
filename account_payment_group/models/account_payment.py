@@ -301,45 +301,44 @@ class AccountPayment(models.Model):
 
         return res
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """ When payments are created from bank reconciliation create the
         Payment group before creating payment to avoid raising error, only
         apply when the all the counterpart account are receivable/payable """
-        # Si viene counterpart_aml entonces estamos viniendo de una
-        # conciliacion desde el wizard
-        new_aml_dicts = self._context.get('new_aml_dicts', [])
-        counterpart_aml_data = self._context.get('counterpart_aml_dicts', [])
-        if counterpart_aml_data or new_aml_dicts:
-            vals.update(self.infer_partner_info(vals))
+        for vals in vals_list:
+            new_aml_dicts = self._context.get('new_aml_dicts', [])
+            counterpart_aml_data = self._context.get('counterpart_aml_dicts', [])
+            if counterpart_aml_data or new_aml_dicts:
+                vals.update(self.infer_partner_info(vals))
 
-        create_from_statement = self._context.get(
-            'create_from_statement', False) and vals.get('partner_type') \
-            and vals.get('partner_id') and all([
-                x['move_line'].account_id.internal_type in [
-                    'receivable', 'payable']
-                for x in counterpart_aml_data])
-        create_from_expense = self._context.get('create_from_expense', False)
-        create_from_website = self._context.get('create_from_website', False)
-        # NOTE: This is required at least from POS when we do not have
-        # partner_id and we do not want a payment group in tha case.
-        create_payment_group = \
-            create_from_statement or create_from_website or create_from_expense
-        if create_payment_group:
-            company_id = self.env['account.journal'].browse(
-                vals.get('journal_id')).company_id.id
-            payment_group = self.env['account.payment.group'].create({
-                'company_id': company_id,
-                'partner_type': vals.get('partner_type'),
-                'partner_id': vals.get('partner_id'),
-                'payment_date': vals.get('date', fields.Date.context_today(self)),
-                'communication': vals.get('communication'),
-            })
-            vals['payment_group_id'] = payment_group.id
-        payment = super(AccountPayment, self).create(vals)
-        if create_payment_group:
-            payment.payment_group_id.post()
-        return payment
+            create_from_statement = self._context.get(
+                'create_from_statement', False) and vals.get('partner_type') \
+                and vals.get('partner_id') and all([
+                    x['move_line'].account_id.internal_type in [
+                        'receivable', 'payable']
+                    for x in counterpart_aml_data])
+            create_from_expense = self._context.get('create_from_expense', False)
+            create_from_website = self._context.get('create_from_website', False)
+            create_payment_group = \
+                create_from_statement or create_from_website or create_from_expense
+            if create_payment_group:
+                company_id = self.env['account.journal'].browse(
+                    vals.get('journal_id')).company_id.id
+                payment_group = self.env['account.payment.group'].create({
+                    'company_id': company_id,
+                    'partner_type': vals.get('partner_type'),
+                    'partner_id': vals.get('partner_id'),
+                    'payment_date': vals.get('date', fields.Date.context_today(self)),
+                    'communication': vals.get('communication'),
+                })
+                vals['payment_group_id'] = payment_group.id
+        payments = super(AccountPayment, self).create(vals_list)
+        for payment in payments:
+            if payment.payment_group_id and not payment.payment_group_id.payment_ids.filtered(
+                    lambda p: p.id != payment.id):
+                payment.payment_group_id.post()
+        return payments
 
     @api.depends('invoice_line_ids', 'payment_type', 'partner_type', 'partner_id')
     def _compute_destination_account_id(self):
