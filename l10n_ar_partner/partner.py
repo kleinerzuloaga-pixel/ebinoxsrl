@@ -12,7 +12,13 @@ class ResPartner(models.Model):
     def write(self, values):
         res = super(ResPartner, self).write(values)
 
-        if self.l10n_latam_identification_type_id.name == 'CUIT' or self.l10n_latam_identification_type_id.name == 'CUIL' or self.l10n_latam_identification_type_id.name == 'DNI':
+        # Use .get() or check if the field exists in the recordset
+        for record in self:
+          # Ensure the field is available and has a value before checking .name
+          if record.l10n_latam_identification_type_id and record.l10n_latam_identification_type_id.name in ['CUIT', 'CUIL', 'DNI']:
+            # your logic here
+
+#        if self.l10n_latam_identification_type_id.name == 'CUIT' or self.l10n_latam_identification_type_id.name == 'CUIL' or self.l10n_latam_identification_type_id.name == 'DNI':
             for rec in self:
                 if rec.vat:
                     if '-' in rec.vat:
