@@ -1,6 +1,6 @@
-=============================
+==============================
 Inflation Adjust For Argentina
-=============================
+==============================
 
 Based on AdHoc, version for Exemax - Codize location
 
@@ -37,8 +37,6 @@ Contributors
 Maintainer
 ----------
 
-|company_logo|
-
-This module is maintained by the |company|.
+This module is maintained by AdHoc.
 
 To contribute to this module, please visit https://www.adhoc.com.ar.

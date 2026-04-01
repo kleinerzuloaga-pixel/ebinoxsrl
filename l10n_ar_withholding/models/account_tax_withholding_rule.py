@@ -31,6 +31,6 @@ class AccountTaxWithholdingRule(models.Model):
     )
     fix_amount = fields.Float(
         'Importe fijo',
-        digits=dp.get_precision('Account'),
+        digits='Account',
         help="Monto fijo después del porcentaje"
     )

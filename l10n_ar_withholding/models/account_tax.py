@@ -62,12 +62,12 @@ class AccountTax(models.Model):
     )
     withholding_non_taxable_amount = fields.Float(
         'Monto no imponible del impuesto',
-        digits=dp.get_precision('Account'),
+        digits='Account',
         help="Importe a restar antes de aplicar la alícuota"
     )
     withholding_non_taxable_minimum = fields.Float(
         'Mínimo no imponible',
-        digits=dp.get_precision('Account'),
+        digits='Account',
         help="Importes inferiores a este no tendrán retención"
     )
     condicion_sicore = fields.Selection([

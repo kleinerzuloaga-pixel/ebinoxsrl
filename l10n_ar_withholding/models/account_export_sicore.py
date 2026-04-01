@@ -33,7 +33,7 @@ class AccountExportSicore(models.Model):
         self.export_sicore_file = encodebytes(self.export_sicore_data.encode('ISO-8859-1'))
 
     export_sicore_file = fields.Binary('Archivo SICORE',compute=_compute_files)
-    export_sicore_filename = fields.Char('Archivo SICORE',compute=_compute_files)
+    export_sicore_filename = fields.Char('Nombre Archivo SICORE',compute=_compute_files)
 
 
     def compute_sicore_data(self):

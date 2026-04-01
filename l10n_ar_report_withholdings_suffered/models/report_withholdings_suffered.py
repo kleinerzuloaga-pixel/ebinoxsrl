@@ -79,7 +79,7 @@ class ReportWithholdingsSuffered(models.Model):
         self.sifere_filename_ret = _('Sifere_ret_%s_%s.txt') % (str(self.date_from),str(self.date_to))
         self.sifere_file_ret = encodebytes(self.sifere_data_ret.encode('ISO-8859-1'))
     sifere_file_ret = fields.Binary('TXT SIFERE Ret',compute=_compute_files_ret)
-    sifere_filename_ret = fields.Char('TXT SIFERE Ret',compute=_compute_files_ret) 
+    sifere_filename_ret = fields.Char('Nombre Arch. SIFERE Ret',compute=_compute_files_ret) 
     
     #Percepciones
     @api.depends('sifere_data_per')
@@ -88,7 +88,7 @@ class ReportWithholdingsSuffered(models.Model):
         self.sifere_filename_per = _('Sifere_per_%s_%s.txt') % (str(self.date_from),str(self.date_to))
         self.sifere_file_per = encodebytes(self.sifere_data_per.encode('ISO-8859-1'))
     sifere_file_per = fields.Binary('TXT SIFERE Per',compute=_compute_files_per)
-    sifere_filename_per = fields.Char('TXT SIFERE Per',compute=_compute_files_per)
+    sifere_filename_per = fields.Char('Nombre Arch. SIFERE Per',compute=_compute_files_per)
     
     #Percepciones e-Sicol
     @api.depends('esicol_data_per')
@@ -97,7 +97,7 @@ class ReportWithholdingsSuffered(models.Model):
         self.esicol_filename_per = _('e-SICOL_%s_%s.txt') % (str(self.date_from),str(self.date_to))
         self.esicol_file_per = encodebytes(self.esicol_data_per.encode('ISO-8859-1'))
     esicol_file_per = fields.Binary('TXT e-SICOL Per',compute=_compute_files_esicol_per)
-    esicol_filename_per = fields.Char('TXT e-SICOL Per',compute=_compute_files_esicol_per)
+    esicol_filename_per = fields.Char('Nombre Arch. e-SICOL Per',compute=_compute_files_esicol_per)
 
     def _get_name(self):
         for rec in self:

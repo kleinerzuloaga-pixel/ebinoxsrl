@@ -122,7 +122,7 @@ class AccountPaymentGroup(models.Model):
         currency_field='currency_id',
     )
     selected_finacial_debt = fields.Monetary(
-        string='Deuda Seleccionada',
+        string='Deuda Selecc. (Fin.)',
         compute='_compute_selected_debt',
     )
     selected_debt = fields.Monetary(
