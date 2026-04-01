@@ -26,12 +26,12 @@ class ProductCategory(models.Model):
     """ Class to inherit product_category to add costing method """
     _inherit = "product.category"
 
-    property_cost_method = fields.Selection([
-        ('standard', 'Standard Price'),
-        ('last', 'Last Purchase Price'),
-        ('fifo', 'First In First Out (FIFO)'),
-        ('average', 'Average Cost (AVCO)')], string='Costing Method',
-        company_dependent=True, copy=True,
+    property_cost_method = fields.Selection(
+        selection_add=[('last', 'Last Purchase Price')],
+        ondelete={'last': 'set default'},
+        string='Costing Method',
+        company_dependent=True,
+        copy=True,
         help="""Standard Price: The products are valued at their standard cost 
             defined on the product. Average Cost (AVCO): The products are 
             valued at weighted average cost. First In First Out (FIFO): The 

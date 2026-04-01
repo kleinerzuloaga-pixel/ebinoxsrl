@@ -116,14 +116,16 @@ class AccountPayment(models.Model):
     )
     journal_ids = fields.Many2many(
         'account.journal',
-        compute='_compute_journals'
+        compute='_compute_journals',
+        string='Diarios Disponibles',
     )
     # journal_at_least_type = fields.Char(
     #     compute='_compute_journal_at_least_type'
     # )
     destination_journal_ids = fields.Many2many(
         'account.journal',
-        compute='_compute_destination_journals'
+        compute='_compute_destination_journals',
+        string='Diarios Destino Disponibles',
     )
 
     @api.depends(

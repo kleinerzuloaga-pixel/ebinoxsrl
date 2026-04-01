@@ -21,14 +21,26 @@ TYPE_TAX_USE = [
 class AccountTaxTemplate(models.Model):
     _inherit = "account.tax.template"
 
-    type_tax_use = fields.Selection(TYPE_TAX_USE, string='Tipo de Impuesto', required=True, default="sale",
-        help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos.")
+    type_tax_use = fields.Selection(
+        selection_add=[
+            ('customer', 'Pago de Cliente'),
+            ('supplier', 'Pago de Proveedor'),
+        ],
+        string='Tipo de Impuesto',
+        help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos."
+    )
 
 class AccountTax(models.Model):
     _inherit = "account.tax"
 
-    type_tax_use = fields.Selection(TYPE_TAX_USE, string='Tax Type', required=True, default="sale",
-        help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos.")
+    type_tax_use = fields.Selection(
+        selection_add=[
+            ('customer', 'Pago de Cliente'),
+            ('supplier', 'Pago de Proveedor'),
+        ],
+        string='Tax Type',
+        help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos."
+    )
     amount = fields.Float(string='Importe', default=0.0)
     withholding_sequence_id = fields.Many2one(
         'ir.sequence',
@@ -115,8 +127,11 @@ class AccountTax(models.Model):
         'tax_withholding_id',
         'Reglas',
     )
-    amount_type = fields.Selection(default='percent', string="Tax Computation", required=True,
-        selection=[('group', 'Grupo de Impuestos'), ('fixed', 'Fijo'), ('percent', 'Porcentaje'), ('division', 'Porcentaje de Impuesto sobre el Precio Incluido'), ('partner_tax', 'Alícuota en el Contacto')],
+    amount_type = fields.Selection(
+        selection_add=[('partner_tax', 'Alícuota en el Contacto')],
+        ondelete={'partner_tax': 'set default'},
+        default='percent',
+        string="Tax Computation",
         help="""
     - Grupo de Impuestos: El impuesto es una configuración de sub-impuestos.
     - Fijo: El importe del impuesto permanece igual sea cual sea el precio .
@@ -346,21 +361,22 @@ class AccountTax(models.Model):
                 regimen.codigo_de_regimen, regimen.concepto_referencia)
         return vals
 
-    @api.model
-    def create(self, vals):
-        tax = super(AccountTax, self).create(vals)
-        if tax.type_tax_use == 'supplier' and not tax.withholding_sequence_id:
-            tax.withholding_sequence_id = self.withholding_sequence_id.\
-                sudo().create({
-                    'name': tax.name,
-                    'implementation': 'no_gap',
-                    # 'prefix': False,
-                    'padding': 8,
-                    'number_increment': 1,
-                    'code': 'account.tax.withholding',
-                    'company_id': tax.company_id.id,
-                }).id
-        return tax
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super(AccountTax, self).create(vals_list)
+        for tax in records:
+            if tax.type_tax_use == 'supplier' and not tax.withholding_sequence_id:
+                tax.withholding_sequence_id = self.withholding_sequence_id.\
+                    sudo().create({
+                        'name': tax.name,
+                        'implementation': 'no_gap',
+                        # 'prefix': False,
+                        'padding': 8,
+                        'number_increment': 1,
+                        'code': 'account.tax.withholding',
+                        'company_id': tax.company_id.id,
+                    }).id
+        return records
 
     @api.constrains('withholding_non_taxable_amount', 'withholding_non_taxable_minimum')
     def check_withholding_non_taxable_amounts(self):

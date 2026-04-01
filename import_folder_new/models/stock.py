@@ -76,7 +76,7 @@ class StockPickingInherit(models.Model):
                 else:
                     rec.task_id = False
 
-    task_ids = fields.Many2many('project.task','stock_picking_task_rel_import','picking_id','task_id', string='Carpeta de importación', compute='get_value_tasks', readonly=False, store=True)
+    task_ids = fields.Many2many('project.task','stock_picking_task_rel_import','picking_id','task_id', string='Carpetas de importación', compute='get_value_tasks', readonly=False, store=True)
 
 
 
@@ -86,7 +86,7 @@ class StockPickingInherit(models.Model):
             rec.task_id = rec.purchase_id.task_id
             return rec.task_id
 
-    task_id = fields.Many2many('project.task', string='Carpeta de importación', store=True)
+    task_id = fields.Many2many('project.task', string='Carpeta de importación (OC)', store=True)
     bultos = fields.Char(string='Bultos')
     is_purchase = fields.Boolean(string='is_purchase', compute='compute_is_purchase')
 

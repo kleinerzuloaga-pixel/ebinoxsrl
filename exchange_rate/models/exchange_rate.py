@@ -22,10 +22,10 @@ class AccountMove(models.Model):
             rec.sudo().with_context(check_move_validity=False, check_amount_currency_balance_sign=False).manual_rate()
         return res
 
-    @api.model
-    def create(self, values):
-        res = super(AccountMove, self).create(values)
-        for rec in self:
+    @api.model_create_multi
+    def create(self, values_list):
+        res = super(AccountMove, self).create(values_list)
+        for rec in res:
             rec.sudo().with_context(check_move_validity=False, check_amount_currency_balance_sign=False).manual_rate()
         return res
 

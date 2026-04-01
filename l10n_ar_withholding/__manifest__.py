@@ -15,7 +15,6 @@
         'views/withholding_view.xml',
         'views/account_export_sicore_view.xml',
         'views/account_move_view.xml',
-        'views/res_partner_view.xml',
         'report/report_payment_withholding.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
