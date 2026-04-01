@@ -53,12 +53,7 @@ class ResPartner(models.Model):
     start_date = fields.Date(
         'Start-up Date',
     )
-    afip_responsability_type_id = fields.Many2one(
-        'l10n_ar.afip.responsability.type',
-        'AFIP Responsability Type',
-        auto_join=True,
-        index=True,
-    )
+
 
     # From
     # http://www.sistemasagiles.com.ar/trac/wiki/PadronContribuyentesAFIP
@@ -243,13 +238,13 @@ class ResPartner(models.Model):
                 vals['state_id'] = state.id
 
         if imp_iva == 'NI' and padron.monotributo == 'S':
-            vals['afip_responsability_type_id'] = self.env.ref(
+            vals['l10n_ar_afip_responsibility_type_id'] = self.env.ref(
                 'l10n_ar.res_RM').id
         elif imp_iva == 'AC':
-            vals['afip_responsability_type_id'] = self.env.ref(
+            vals['l10n_ar_afip_responsibility_type_id'] = self.env.ref(
                 'l10n_ar.res_IVARI').id
         elif imp_iva == 'EX':
-            vals['afip_responsability_type_id'] = self.env.ref(
+            vals['l10n_ar_afip_responsibility_type_id'] = self.env.ref(
                 'l10n_ar.res_IVAE').id
         else:
             _logger.info(

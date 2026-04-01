@@ -52,9 +52,7 @@ class ImportCampos(models.Model):
     mulc_date = fields.Date('MULC')
     nav = fields.Char('Naviera')
     currency_id = fields.Many2one('res.currency', string="Currency",
-                                 related='company_id.currency_id',
-                                 default=lambda
-                                 self: self.env.user.company_id.currency_id.id)
+                                 related='company_id.currency_id')
     for_money = fields.Monetary(string="FOB R")
     sira_money = fields.Monetary(string="FOB SEDI")
     currency_field = fields.Many2one('res.currency', string='Divisas')
