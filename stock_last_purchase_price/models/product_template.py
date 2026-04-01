@@ -26,10 +26,11 @@ class ProductTemplate(models.Model):
     """ Class to inherit product.template to add costing method """
     _inherit = 'product.template'
 
-    property_cost_method = fields.Selection(
-        selection_add=[('last', 'Last Purchase Price')],
-        ondelete={'last': 'set default'},
-        string='Método de Costo (Compat.)',
+    property_cost_method = fields.Selection([
+        ('standard', 'Standard Price'),
+        ('last', 'Last Purchase Price'),
+        ('fifo', 'First In First Out (FIFO)'),
+        ('average', 'Average Cost (AVCO)')], string='Método de Costo (Compat.)',
         company_dependent=True, copy=True,
         help="""Standard Price: The products are valued at their standard cost defined on the product.
         Average Cost (AVCO): The products are valued at weighted average cost.

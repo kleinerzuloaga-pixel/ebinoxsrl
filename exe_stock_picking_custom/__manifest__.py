@@ -30,7 +30,5 @@
         'views/report_deliveryslip_inherit.xml',
     ],
     # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+    'demo': [],
 }
