@@ -9,26 +9,38 @@ class ResPartner(models.Model):
 
     internal_reference = fields.Char('Nombre de Fantasía')
 
-    def write(self, values):
-        res = super(ResPartner, self).write(values)
 
-        # Use .get() or check if the field exists in the recordset
+    def write(self, vals):
+        # Perform your logic
         for record in self:
-          # Ensure the field is available and has a value before checking .name
-          if record.l10n_latam_identification_type_id and record.l10n_latam_identification_type_id.name in ['CUIT', 'CUIL', 'DNI']:
-            # your logic here
+            # getattr(object, name, default) safely checks for the field
+            ident_type = getattr(record, 'l10n_latam_identification_type_id', False)
+            if ident_type and ident_type.name in ['CUIT', 'CUIL', 'DNI']:
+                # your logic here
+                pass
+        return super(ResPartner, self).write(vals)
 
-#        if self.l10n_latam_identification_type_id.name == 'CUIT' or self.l10n_latam_identification_type_id.name == 'CUIL' or self.l10n_latam_identification_type_id.name == 'DNI':
-            for rec in self:
-                if rec.vat:
-                    if '-' in rec.vat:
-                        vat = rec.vat.replace('-', '')
-                        rec.vat = vat
-                    if '.' in rec.vat:
-                        vat = rec.vat.replace('.', '')
-                        rec.vat = vat
 
-        return res
+#    def write(self, values):
+#        res = super(ResPartner, self).write(values)
+#
+#        # Use .get() or check if the field exists in the recordset
+#        for record in self:
+#          # Ensure the field is available and has a value before checking .name
+#          if record.l10n_latam_identification_type_id and record.l10n_latam_identification_type_id.name in ['CUIT', 'CUIL', 'DNI']:
+#            # your logic here
+#
+##        if self.l10n_latam_identification_type_id.name == 'CUIT' or self.l10n_latam_identification_type_id.name == 'CUIL' or self.l10n_latam_identification_type_id.name == 'DNI':
+#            for rec in self:
+#                if rec.vat:
+#                    if '-' in rec.vat:
+#                        vat = rec.vat.replace('-', '')
+#                        rec.vat = vat
+#                    if '.' in rec.vat:
+#                        vat = rec.vat.replace('.', '')
+#                        rec.vat = vat
+#
+#        return res
 
     def name_get(self):
         result = []

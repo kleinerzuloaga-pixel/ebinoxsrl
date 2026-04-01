@@ -12,7 +12,13 @@ Datos Extras para Contacto de Argentina
     """,
     'author': 'Codize, Exemax',
     'website': 'http://www.codize.ar',
-    'depends': ['base'],
+    # 'depends': ['base'],
+    'depends': [
+        'base', 
+        'l10n_latam_base', 
+        'l10n_ar',
+        'mail', # Added because the error triggers during mail data load
+    ],
     'data': ['partner_view.xml'],
     'installable': True,
 }
