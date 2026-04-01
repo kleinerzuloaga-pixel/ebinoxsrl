@@ -6,7 +6,7 @@
     'summary': "Datos Extras para Contacto de Argentina",
     'description': """
 Datos Extras para Contacto de Argentina
-======================
+=======================================
 
 * Agrega nombre de Fantasía
     """,
