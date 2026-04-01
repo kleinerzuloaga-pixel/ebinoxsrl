@@ -26,6 +26,10 @@ class AccountTaxTemplate(models.Model):
             ('customer', 'Pago de Cliente'),
             ('supplier', 'Pago de Proveedor'),
         ],
+        ondelete={
+            'customer': 'set default',
+            'supplier': 'set default',
+        },
         string='Tipo de Impuesto',
         help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos."
     )
@@ -38,6 +42,10 @@ class AccountTax(models.Model):
             ('customer', 'Pago de Cliente'),
             ('supplier', 'Pago de Proveedor'),
         ],
+        ondelete={
+            'customer': 'set default',
+            'supplier': 'set default',
+        },
         string='Tax Type',
         help="Determina dónde se puede seleccionar el impuesto. Nota: 'Ninguno' significa que un impuesto no se puede usar solo, sin embargo, aún se puede usar en un grupo. 'Ajuste' se utiliza para realizar el ajuste de impuestos."
     )
