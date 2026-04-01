@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-try:
-    from pysimplesoap.client import SoapFault
-except ImportError:
-    SoapFault = None
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter('ignore', DeprecationWarning)
+    try:
+        from pysimplesoap.client import SoapFault
+    except ImportError:
+        SoapFault = None
 import logging
 _logger = logging.getLogger(__name__)
 

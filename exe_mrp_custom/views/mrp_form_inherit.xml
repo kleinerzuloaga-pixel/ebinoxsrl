@@ -6,7 +6,7 @@
             <field name="model">mrp.workorder</field>
             <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@class='o_row'][1]" position="after">
+                <xpath expr="//div[hasclass('o_row')][1]" position="after">
                     <label for="duration_expected_hours"/>
                     <div class="o_row">
                         <field name="duration_expected_hours" widget="float_time"/>
