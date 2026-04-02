@@ -1,8 +1,0 @@
-<odoo>
-
-    <record id="group_project_importation_manager" model="res.groups">
-        <field name="name">Visualiza Proyecto de importación</field>
-        <field name="category_id" ref="base.module_category_services_project"/>
-    </record>
-
-</odoo>
