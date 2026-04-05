@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_invoice_document_custom" inherit_id="account.report_invoice_document">
+            <xpath expr="//div[4]/span[1]" position="before">
+                <div style="margin-top: 20px; font-size:16px;">
+                  <t t-if="o.currency_id.name == 'USD'">
+                    <p>
+                        Este comprobante equivale a: 
+                        <strong>
+                            <t t-esc="round(o.amount_total * o.currency_id.inverse_rate, 2)"/> ARS
+                        </strong> 
+                        con una cotización de <strong><t t-esc="round(o.currency_id.inverse_rate, 2)"/> por dólar.</strong>
+                    </p>
+                </t>
+                <!--se agrega el control de USB-->
+                <t t-elif="o.currency_id.name == 'USB'">
+                 <p> Este comprobante equivale a: <strong> 
+                 <!--original-->
+                 <!-- <t t-esc="round(o.amount_total * o.currency_id.inverse_rate, 2)"/> ARS 
+                 </strong> con una cotización de <strong>$<t t-esc="round(o.currency_id.inverse_rate, 2)"/> por dólar.</strong>  -->
+                 <!--alternativa-->
+                 <t t-esc="round(o.amount_total * o.l10n_ar_currency_rate, 2)"/> ARS 
+                 </strong>con una cotización de <strong>$<t t-esc="round(o.l10n_ar_currency_rate, 2)"/> por dólar.</strong>
+                 
+                 <!--<t t-esc="round(o.amount_total * o.l10n_ar_currency_rate, 2)"/>-->
+                 
+                 
+                 </p> 
+                 </t>
+                 
+                <t t-else="">
+                    <p>
+                        Este comprobante equivale a: 
+                        <strong>
+                            <t t-set="usd_currency" t-value="env['res.currency'].search([('name','=','USD')], limit=1)" />
+                            <t t-esc="round(o.amount_total / usd_currency.inverse_rate, 2)"/> USD
+                        </strong> 
+                        con una cotización de <strong>$<t t-esc="round(usd_currency.inverse_rate, 2)"/> por dólar.</strong>
+                    </p><br/><br/><br/><br/>
+                </t>
+                <t t-if="num_remitos">
+                    <div>
+                        <strong>Números de Remito Pre-impreso:</strong>
+                        <ul>
+                            <t t-foreach="num_remitos" t-as="num_remito">
+                                <li t-esc="num_remito"/>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+                </div>
+                
+            </xpath>
+
+
+
+        </template>
+
+
+    </data>
+</odoo> 
