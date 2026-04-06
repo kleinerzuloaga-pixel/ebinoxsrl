@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="exe_crm_form_inherit_custom">
+            <field name="name">exe.crm.form.inherit.custom</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <field name="licitacion" position="after">
+                        <field name="partner_sales_purchases_user_id" widget="many2one_avatar_user"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
