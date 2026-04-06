@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="project_importation_form_view" model="ir.ui.view">
+            <field name="name">project.importation.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <data>
+                    <field name="tag_ids" position="after">
+                    <label for="importation"/>
+                        <div class="o_row">
+                           <field name="importation"/>
+                        </div>
+                    </field>
+                </data>
+            </field>
+        </record>
+    </data>
+</odoo>
