@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_exe_account_remito_exe_account_remito,exe_account_remito.exe_account_remito,model_exe_account_remito_exe_account_remito,base.group_user,1,1,1,1

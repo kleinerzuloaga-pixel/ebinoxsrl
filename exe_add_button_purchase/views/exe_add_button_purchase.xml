@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <!-- Vista de Formulario del Pedido de Venta -->
+        <record id="add_view_order_form" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <header>
+                    <button name="action_create_purchase_order" string="Crear Presupuesto de Compra" type="object" class="oe_highlight"/>
+                </header>
+                <!-- <xpath expr="//div[@name='button_box']" position="inside">
+                    <button type="action" name="action_view_purchase_orders"
+                            class="oe_stat_button" icon="fa-external-link">
+                        <field string="Presupuestos de Compra" widget="statinfo" name="purchase_order_count"/>
+                    </button>
+                </xpath> -->
+            </field>
+        </record>
+
+        <!-- Vista de Formulario del Presupuesto de Compra -->
+        <record id="view_see_purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+                    <!-- <field name="sale_order_id" /> -->
+                    <field name="origin"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="action_view_purchase_orders" model="ir.actions.act_window">
+            <field name="name">Presupuestos de Compra</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="domain">[('sale_order_id', '=', active_id)]</field>
+        </record>
+
+    </data>
+</odoo>
