@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_test_horas_root" name="Novedades y Horas" sequence="55" groups="ebinox_test_horas.group_test_horas_user"/>
+    <menuitem id="menu_test_horas_operation" name="Operación" parent="menu_test_horas_root" sequence="10"/>
+    <menuitem id="menu_test_horas_workday" name="Jornadas" parent="menu_test_horas_operation" action="action_workday" sequence="10"/>
+    <menuitem id="menu_test_horas_alerts" name="Alertas" parent="menu_test_horas_operation" action="action_workday_alerts" sequence="15"/>
+    <menuitem id="menu_test_horas_novelty" name="Novedades" parent="menu_test_horas_operation" action="action_daily_novelty" sequence="20"/>
+    <menuitem id="menu_test_horas_clock" name="Marcaciones crudas" parent="menu_test_horas_operation" action="action_clock_event" sequence="30"/>
+    <menuitem id="menu_test_horas_overtime" name="Horas extra" parent="menu_test_horas_root" sequence="20"/>
+    <menuitem id="menu_test_horas_audit" name="Auditoría" parent="menu_test_horas_root" action="action_audit_event" sequence="80" groups="ebinox_test_horas.group_test_horas_auditor"/>
+    <menuitem id="menu_test_horas_period" name="Períodos" parent="menu_test_horas_overtime" action="action_overtime_period" sequence="10"/>
+    <menuitem id="menu_test_horas_valuation" name="Valorizaciones" parent="menu_test_horas_overtime" action="action_overtime_valuation" sequence="20" groups="ebinox_test_horas.group_test_horas_payroll"/>
+    <menuitem id="menu_test_horas_overtime_analysis" name="Análisis" parent="menu_test_horas_overtime" action="action_overtime_analysis" sequence="30"/>
+    <menuitem id="menu_test_horas_config" name="Configuración" parent="menu_test_horas_root" sequence="90" groups="ebinox_test_horas.group_test_horas_manager"/>
+    <menuitem id="menu_test_horas_novelty_type" name="Tipos de novedad" parent="menu_test_horas_config" action="action_novelty_type" sequence="10"/>
+</odoo>
+

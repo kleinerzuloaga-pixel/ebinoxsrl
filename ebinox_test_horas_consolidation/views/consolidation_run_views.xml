@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_consolidation_run_list" model="ir.ui.view">
+        <field name="name">test.horas.consolidation.run.list</field>
+        <field name="model">test.horas.consolidation.run</field>
+        <field name="arch" type="xml">
+            <list create="true" edit="false" delete="false">
+                <field name="create_date"/><field name="name"/><field name="company_id"/>
+                <field name="date_from"/><field name="date_to"/><field name="events_read"/>
+                <field name="workdays_created"/><field name="workdays_updated"/><field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_consolidation_run_form" model="ir.ui.view">
+        <field name="name">test.horas.consolidation.run.form</field>
+        <field name="model">test.horas.consolidation.run</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <header>
+                    <button name="action_preview" type="object" string="Previsualizar"/>
+                    <button name="action_consolidate" type="object" string="Consolidar jornadas" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group><group><field name="name"/><field name="company_id"/><field name="date_from"/><field name="date_to"/></group><group><field name="preview_event_count"/><field name="executed_by_id"/><field name="started_at"/><field name="finished_at"/></group></group>
+                    <group string="Resultado"><field name="events_read"/><field name="superseded_events_ignored"/><field name="workdays_created"/><field name="workdays_updated"/><field name="unresolved_schedule_days"/></group>
+                    <group string="Contrato de aislamiento"><field name="operations_log" nolabel="1"/></group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_consolidation_run" model="ir.actions.act_window">
+        <field name="name">Consolidar jornadas</field>
+        <field name="res_model">test.horas.consolidation.run</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_consolidation_run" name="Consolidar jornadas" parent="ebinox_test_horas.menu_test_horas_operation" action="action_consolidation_run" sequence="50" groups="ebinox_test_horas.group_test_horas_manager"/>
+</odoo>
+

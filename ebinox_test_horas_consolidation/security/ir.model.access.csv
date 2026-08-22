@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_consolidation_run_manager,consolidation.run.manager,model_test_horas_consolidation_run,ebinox_test_horas.group_test_horas_manager,1,1,1,0
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_monthly_close_batch_wizard_form" model="ir.ui.view">
+        <field name="name">test.horas.monthly.close.batch.wizard.form</field>
+        <field name="model">test.horas.monthly.close.batch.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Cierre mensual masivo" delete="false">
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="month"/>
+                        <field name="state"/>
+                    </group>
+                    <group>
+                        <button name="action_load_roster" type="object" string="Cargar nómina vigente" class="btn-secondary"/>
+                        <field name="employee_ids" widget="many2many_tags"/>
+                    </group>
+                </group>
+                <field name="audit_note" placeholder="Criterio y evidencia de revisión del lote"/>
+                <group invisible="not operations_log">
+                    <field name="selected_count"/>
+                    <field name="created_count"/>
+                    <field name="computed_count"/>
+                    <field name="closed_count"/>
+                    <field name="skipped_count"/>
+                    <field name="operations_log"/>
+                </group>
+                <footer>
+                    <button name="action_prepare" type="object" string="Preparar / recalcular" class="btn-secondary"/>
+                    <button name="action_review_and_close" type="object" string="Revisar y cerrar lote" class="oe_highlight" confirm="Se cerrarán todos los registros sin pendientes. ¿Continuar?"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_monthly_close_batch_wizard" model="ir.actions.act_window">
+        <field name="name">Cierre mensual masivo</field>
+        <field name="res_model">test.horas.monthly.close.batch.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

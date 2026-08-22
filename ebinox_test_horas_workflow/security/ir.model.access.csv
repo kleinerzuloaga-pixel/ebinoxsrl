@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_novelty_batch_wizard_operator,novelty.batch.wizard.operator,model_test_horas_novelty_batch_wizard,ebinox_test_horas.group_test_horas_operator,1,1,1,1
+access_hour_value_payroll,hour.value.payroll,model_test_horas_hour_value,ebinox_test_horas.group_test_horas_payroll,1,1,1,0
+access_hour_value_auditor,hour.value.auditor,model_test_horas_hour_value,ebinox_test_horas.group_test_horas_auditor,1,0,0,0

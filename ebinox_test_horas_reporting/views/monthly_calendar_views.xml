@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_monthly_calendar_list" model="ir.ui.view">
+        <field name="name">test.horas.monthly.calendar.list</field>
+        <field name="model">test.horas.monthly.calendar</field>
+        <field name="arch" type="xml">
+            <list create="true" delete="false" decoration-success="state == 'done'">
+                <field name="month"/>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="employee_count"/>
+                <field name="pending_count"/>
+                <field name="warning_count"/>
+                <field name="state"/>
+                <field name="result_hash"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_monthly_calendar_form" model="ir.ui.view">
+        <field name="name">test.horas.monthly.calendar.form</field>
+        <field name="model">test.horas.monthly.calendar</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <header>
+                    <button name="action_load_roster" type="object" string="Cargar nómina vigente" class="btn-secondary" invisible="state != 'draft'" groups="ebinox_test_horas.group_test_horas_operator"/>
+                    <button name="action_generate" type="object" string="Generar snapshot" class="oe_highlight" invisible="state != 'draft'" groups="ebinox_test_horas.group_test_horas_operator"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group><field name="name"/><field name="company_id"/><field name="month"/></group>
+                        <group><field name="employee_count"/><field name="line_count"/><field name="pending_count"/><field name="warning_count"/></group>
+                    </group>
+                    <field name="employee_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+                    <group string="Auditoría" invisible="state != 'done'">
+                        <field name="result_hash"/><field name="generated_by_id"/><field name="generated_at"/><field name="operations_log"/>
+                    </group>
+                    <notebook invisible="state != 'done'">
+                        <page string="Matriz persona × día">
+                            <field name="matrix_html" widget="html" nolabel="1"/>
+                        </page>
+                        <page string="Detalle auditable">
+                            <field name="line_ids" readonly="1">
+                                <list create="false" delete="false" decoration-danger="warning_code != False" decoration-muted="not code">
+                                    <field name="date"/><field name="employee_id"/><field name="code"/><field name="source"/><field name="warning_code"/><field name="ordinary_min"/><field name="payable_overtime_min"/><field name="workday_id"/><field name="novelty_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_monthly_calendar_line_list" model="ir.ui.view">
+        <field name="name">test.horas.monthly.calendar.line.list</field>
+        <field name="model">test.horas.monthly.calendar.line</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false" decoration-danger="warning_code != False" decoration-muted="not code">
+                <field name="date"/><field name="employee_id"/><field name="company_id" groups="base.group_multi_company"/><field name="code"/><field name="source"/><field name="warning_code"/><field name="ordinary_min"/><field name="payable_overtime_min"/><field name="calendar_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_monthly_calendar_line_pivot" model="ir.ui.view">
+        <field name="name">test.horas.monthly.calendar.line.pivot</field>
+        <field name="model">test.horas.monthly.calendar.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Calendario mensual analítico">
+                <field name="employee_id" type="row"/>
+                <field name="code" type="row"/>
+                <field name="date" type="col" interval="day"/>
+                <field name="day_count" type="measure"/>
+                <field name="ordinary_min" type="measure"/>
+                <field name="payable_overtime_min" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_monthly_calendar_line_search" model="ir.ui.view">
+        <field name="name">test.horas.monthly.calendar.line.search</field>
+        <field name="model">test.horas.monthly.calendar.line</field>
+        <field name="arch" type="xml">
+            <search string="Detalle del calendario mensual">
+                <field name="employee_id"/><field name="date"/><field name="code"/><field name="warning_code"/>
+                <filter name="pending" string="Pendientes" domain="[('code', '=', False)]"/>
+                <filter name="warnings" string="Con alerta" domain="[('warning_code', '!=', False)]"/>
+                <separator/>
+                <filter name="group_employee" string="Persona" context="{'group_by': 'employee_id'}"/>
+                <filter name="group_code" string="Código" context="{'group_by': 'code'}"/>
+                <filter name="group_day" string="Día" context="{'group_by': 'date:day'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_monthly_calendar" model="ir.actions.act_window">
+        <field name="name">Calendario mensual</field>
+        <field name="res_model">test.horas.monthly.calendar</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="action_monthly_calendar_line" model="ir.actions.act_window">
+        <field name="name">Detalle de calendario</field>
+        <field name="res_model">test.horas.monthly.calendar.line</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_monthly_calendar_line_search"/>
+    </record>
+</odoo>

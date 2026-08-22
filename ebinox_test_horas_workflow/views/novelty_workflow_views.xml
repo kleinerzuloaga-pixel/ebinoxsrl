@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_novelty_type_form_workflow" model="ir.ui.view">
+        <field name="name">test.horas.novelty.type.form.workflow</field><field name="model">test.horas.novelty.type</field><field name="inherit_id" ref="ebinox_test_horas.view_novelty_type_form"/>
+        <field name="arch" type="xml"><xpath expr="//field[@name='requires_document']" position="after"><field name="grants_theoretical_hours"/></xpath></field>
+    </record>
+</odoo>
+

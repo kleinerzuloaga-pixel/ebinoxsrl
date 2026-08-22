@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="privilege_test_horas" model="res.groups.privilege">
+        <field name="name">Novedades y Horas</field>
+        <field name="sequence">50</field>
+        <field name="category_id" ref="base.module_category_human_resources"/>
+    </record>
+
+<record id="group_test_horas_user" model="res.groups">
+        <field name="name">Test de Horas / Consulta</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+    </record>
+
+    <record id="group_test_horas_operator" model="res.groups">
+        <field name="name">Test de Horas / Operador RRHH</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+        <field name="implied_ids" eval="[(4, ref('group_test_horas_user'))]"/>
+    </record>
+
+    <record id="group_test_horas_supervisor" model="res.groups">
+        <field name="name">Test de Horas / Supervisor</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+        <field name="implied_ids" eval="[(4, ref('group_test_horas_operator'))]"/>
+    </record>
+
+    <record id="group_test_horas_payroll" model="res.groups">
+        <field name="name">Test de Horas / Liquidación</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+        <field name="implied_ids" eval="[(4, ref('group_test_horas_user'))]"/>
+    </record>
+
+    <record id="group_test_horas_auditor" model="res.groups">
+        <field name="name">Test de Horas / Auditor</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+        <field name="implied_ids" eval="[(4, ref('group_test_horas_user'))]"/>
+    </record>
+
+    <record id="group_test_horas_manager" model="res.groups">
+        <field name="name">Test de Horas / Administrador funcional</field>
+        <field name="privilege_id" ref="privilege_test_horas"/>
+        <field name="implied_ids" eval="[(4, ref('group_test_horas_supervisor')), (4, ref('group_test_horas_payroll')), (4, ref('group_test_horas_auditor'))]"/>
+    </record>
+
+    <record id="rule_clock_event_company" model="ir.rule">
+        <field name="name">Fichadas por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_clock_event"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workday_company" model="ir.rule">
+        <field name="name">Jornadas por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_workday"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_workday_adjustment_company" model="ir.rule">
+        <field name="name">Ajustes de jornada por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_workday_adjustment"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>    <record id="rule_novelty_type_company" model="ir.rule">
+        <field name="name">Tipos de novedad globales o por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_novelty_type"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]</field>
+    </record>    <record id="rule_daily_novelty_company" model="ir.rule">
+        <field name="name">Novedades por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_daily_novelty"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_novelty_evidence_company" model="ir.rule">
+        <field name="name">Evidencia de novedades por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_novelty_evidence"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>    <record id="rule_overtime_period_company" model="ir.rule">
+        <field name="name">Períodos de extras por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_overtime_period"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_overtime_line_company" model="ir.rule">
+        <field name="name">Extras por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_overtime_line"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_overtime_valuation_company" model="ir.rule">
+        <field name="name">Valorizaciones por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_overtime_valuation"/>
+        <field name="groups" eval="[(4, ref('group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_audit_event_company" model="ir.rule"><field name="name">Auditoría transversal por compañía</field><field name="model_id" ref="model_test_horas_audit_event"/><field name="groups" eval="[(4, ref('group_test_horas_user'))]"/><field name="domain_force">[('company_id', 'in', company_ids)]</field></record>
+</odoo>
+

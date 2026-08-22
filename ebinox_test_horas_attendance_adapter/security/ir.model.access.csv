@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_attendance_sync_run_manager,attendance.sync.run.manager,model_test_horas_attendance_sync_run,ebinox_test_horas.group_test_horas_manager,1,1,1,0
+

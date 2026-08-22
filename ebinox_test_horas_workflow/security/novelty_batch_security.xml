@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_novelty_batch_wizard_company" model="ir.rule">
+        <field name="name">Carga masiva de novedades por compañía</field>
+        <field name="model_id" ref="model_test_horas_novelty_batch_wizard"/>
+        <field name="groups" eval="[(4, ref('ebinox_test_horas.group_test_horas_operator'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_attendance_sync_run_company" model="ir.rule">
+        <field name="name">Sincronizaciones por compañía permitida</field>
+        <field name="model_id" ref="model_test_horas_attendance_sync_run"/>
+        <field name="groups" eval="[(4, ref('ebinox_test_horas.group_test_horas_manager'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
+

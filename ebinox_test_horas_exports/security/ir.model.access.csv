@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_transition_export_user,transition.export.user,model_test_horas_transition_export,ebinox_test_horas.group_test_horas_user,1,0,0,0
+access_transition_export_manager,transition.export.manager,model_test_horas_transition_export,ebinox_test_horas.group_test_horas_manager,1,1,1,0
+

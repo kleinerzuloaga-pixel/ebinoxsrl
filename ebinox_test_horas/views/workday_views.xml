@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_workday_tree" model="ir.ui.view">
+        <field name="name">test.horas.workday.tree</field>
+        <field name="model">test.horas.workday</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-danger="state == 'review'" decoration-success="state == 'closed'">
+                <field name="operational_date"/>
+                <field name="employee_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="effective_first_mark"/>
+                <field name="effective_last_mark"/>
+                <field name="warning_code"/>
+                <field name="tardiness_min"/>
+                <field name="detected_overtime_min"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_workday_form" model="ir.ui.view">
+        <field name="name">test.horas.workday.form</field>
+        <field name="model">test.horas.workday</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <header>
+                    <button name="action_mark_review" type="object" string="Marcar para revisión" groups="ebinox_test_horas.group_test_horas_operator"/>
+                    <button name="action_mark_audited" type="object" string="Auditar" groups="ebinox_test_horas.group_test_horas_auditor"/>
+                    <button name="action_close" type="object" string="Cerrar" groups="ebinox_test_horas.group_test_horas_auditor"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group><field name="employee_id" readonly="1"/><field name="operational_date" readonly="1"/><field name="declared_calendar_id" readonly="1"/><field name="effective_calendar_id"/></group>
+                        <group><field name="mark_count"/><field name="first_mark"/><field name="last_mark"/><field name="novelty_id"/></group>
+                    </group>
+                    <group string="Marcas efectivas">
+                        <group><field name="corrected_first_mark"/><field name="effective_first_mark"/></group>
+                        <group><field name="corrected_last_mark"/><field name="effective_last_mark"/></group>
+                    </group>
+                    <group string="Resultado calculado">
+                        <group><field name="ordinary_diurnal_min"/><field name="ordinary_nocturnal_min"/><field name="tardiness_min"/><field name="detected_overtime_min"/></group>
+                        <group><field name="payable_50_diurnal_min"/><field name="payable_50_nocturnal_min"/><field name="payable_100_diurnal_min"/><field name="payable_100_nocturnal_min"/></group>
+                    </group>
+                    <group string="Alertas"><field name="warning_code"/><field name="warning_detail"/></group>
+                    <group string="Auditoría"><field name="calculation_version"/><field name="calculated_at"/><field name="calculated_by_id"/><field name="audit_note"/></group>
+                    <notebook><page string="Marcaciones originales"><field name="clock_event_ids" readonly="1"/></page></notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_workday" model="ir.actions.act_window">
+        <field name="name">Jornadas</field>
+        <field name="res_model">test.horas.workday</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="view_workday_alert_list" model="ir.ui.view">
+        <field name="name">test.horas.workday.alert.list</field>
+        <field name="model">test.horas.workday</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-danger="state == 'review'" decoration-muted="state == 'closed'">
+                <field name="operational_date"/>
+                <field name="employee_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="warning_code"/>
+                <field name="warning_detail"/>
+                <field name="mark_count"/>
+                <field name="effective_first_mark"/>
+                <field name="effective_last_mark"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_workday_alert_search" model="ir.ui.view">
+        <field name="name">test.horas.workday.alert.search</field>
+        <field name="model">test.horas.workday</field>
+        <field name="arch" type="xml">
+            <search string="Alertas de jornadas">
+                <field name="employee_id"/>
+                <field name="operational_date"/>
+                <field name="warning_code"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <filter name="needs_review" string="A revisar" domain="[('state', '=', 'review')]"/>
+                <filter name="not_closed" string="Abiertas" domain="[('state', '!=', 'closed')]"/>
+                <separator/>
+                <filter name="group_warning" string="Motivo" context="{'group_by': 'warning_code'}"/>
+                <filter name="group_employee" string="Persona" context="{'group_by': 'employee_id'}"/>
+                <filter name="group_month" string="Mes" context="{'group_by': 'operational_date:month'}"/>
+            </search>
+        </field>
+    </record>
+    <record id="action_workday_alerts" model="ir.actions.act_window">
+        <field name="name">Bandeja de alertas</field>
+        <field name="res_model">test.horas.workday</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_workday_alert_list"/>
+        <field name="search_view_id" ref="view_workday_alert_search"/>
+        <field name="domain">[('warning_code', '!=', False)]</field>
+        <field name="context">{'search_default_not_closed': 1}</field>
+    </record></odoo>
+

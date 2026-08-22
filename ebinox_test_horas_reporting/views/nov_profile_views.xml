@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_profile_form_nov" model="ir.ui.view">
+        <field name="name">test.horas.employee.profile.form.nov</field>
+        <field name="model">test.horas.employee.profile</field>
+        <field name="inherit_id" ref="view_employee_profile_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='population_type']" position="after">
+                <field name="nov_treatment"/>
+                <field name="consultant_code" invisible="nov_treatment != 'consultant'"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_employee_profile_list_nov" model="ir.ui.view">
+        <field name="name">test.horas.employee.profile.list.nov</field>
+        <field name="model">test.horas.employee.profile</field>
+        <field name="inherit_id" ref="view_employee_profile_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='population_type']" position="after">
+                <field name="nov_treatment"/>
+                <field name="consultant_code" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

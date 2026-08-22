@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_hour_value_company" model="ir.rule">
+        <field name="name">Valores hora por compañía</field>
+        <field name="model_id" ref="model_test_horas_hour_value"/>
+        <field name="groups" eval="[(4, ref('ebinox_test_horas.group_test_horas_user'))]"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

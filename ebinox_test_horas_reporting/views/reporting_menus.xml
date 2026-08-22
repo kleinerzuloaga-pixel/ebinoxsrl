@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_reporting" name="Reportes y cierres" parent="ebinox_test_horas.menu_test_horas_root" sequence="30"/>
+    <menuitem id="menu_monthly_calendar" name="Calendario mensual" parent="menu_reporting" action="action_monthly_calendar" sequence="5"/>
+    <menuitem id="menu_monthly_calendar_line" name="Detalle calendario" parent="menu_reporting" action="action_monthly_calendar_line" sequence="6"/>
+    <menuitem id="menu_absenteeism_run" name="Ausentismo" parent="menu_reporting" action="action_absenteeism_run" sequence="10"/>
+    <menuitem id="menu_absenteeism_detail" name="Detalle / Pivot" parent="menu_reporting" action="action_absenteeism_line" sequence="20"/>
+    <menuitem id="menu_monthly_close" name="Cierres mensuales" parent="menu_reporting" action="action_monthly_close" sequence="30"/>
+    <menuitem id="menu_monthly_close_batch" name="Cierre masivo" parent="menu_reporting" action="action_monthly_close_batch_wizard" sequence="35" groups="ebinox_test_horas.group_test_horas_auditor"/>
+    <menuitem id="menu_reporting_config" name="Configuración de reportes" parent="ebinox_test_horas.menu_test_horas_config" sequence="20"/>
+    <menuitem id="menu_employee_profile" name="Perfiles auxiliares" parent="menu_reporting_config" action="action_employee_profile" sequence="10"/>
+    <menuitem id="menu_holiday" name="Feriados del piloto" parent="menu_reporting_config" action="action_holiday" sequence="20"/>
+</odoo>
+

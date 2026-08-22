@@ -1,0 +1,25 @@
+{
+    "name": "Ebinox - Reportes y Cierres de Test de Horas",
+    "summary": "Ausentismo, tardanzas y cierres mensuales aislados",
+    "category": "Human Resources/Attendances",
+    "license": "LGPL-3",
+    "author": "Ebinox",
+    "version": "19.0.1.0.0",
+    "depends": ["ebinox_test_horas_consolidation", "ebinox_test_horas_workflow"],
+    "data": [
+        "security/ir.model.access.csv",
+        "security/reporting_security.xml",
+        "views/employee_profile_views.xml",
+        "views/nov_profile_views.xml",
+        "views/absenteeism_views.xml",
+        "views/monthly_close_views.xml",
+        "views/monthly_close_batch_wizard_views.xml",
+        "views/monthly_calendar_views.xml",
+        "views/reporting_menus.xml",
+    ],
+    "pre_init_hook": "pre_init_hook",
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+}
+

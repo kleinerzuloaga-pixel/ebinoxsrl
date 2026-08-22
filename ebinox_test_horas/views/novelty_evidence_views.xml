@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_daily_novelty_form_evidence" model="ir.ui.view">
+        <field name="name">test.horas.daily.novelty.form.evidence</field>
+        <field name="model">test.horas.daily.novelty</field>
+        <field name="inherit_id" ref="view_daily_novelty_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page string="Evidencia privada">
+                        <field name="evidence_ids">
+                            <list editable="bottom" delete="false">
+                                <field name="file_name"/>
+                                <field name="file_data" filename="file_name"/>
+                                <field name="mime_type"/>
+                                <field name="note"/>
+                                <field name="file_size"/>
+                                <field name="content_sha256"/>
+                                <field name="uploaded_by_id"/>
+                                <field name="uploaded_at"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

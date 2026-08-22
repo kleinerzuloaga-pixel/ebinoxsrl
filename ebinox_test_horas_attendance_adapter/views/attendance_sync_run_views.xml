@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_attendance_sync_run_tree" model="ir.ui.view">
+        <field name="name">test.horas.attendance.sync.run.tree</field>
+        <field name="model">test.horas.attendance.sync.run</field>
+        <field name="arch" type="xml">
+            <list create="true" edit="false" delete="false">
+                <field name="create_date"/>
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="attendances_read"/>
+                <field name="events_created"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_attendance_sync_run_form" model="ir.ui.view">
+        <field name="name">test.horas.attendance.sync.run.form</field>
+        <field name="model">test.horas.attendance.sync.run</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <header>
+                    <button name="action_preview" type="object" string="Previsualizar"/>
+                    <button name="action_sync" type="object" string="Copiar a área aislada" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group><field name="name"/><field name="company_id"/><field name="date_from"/><field name="date_to"/></group>
+                        <group><field name="preview_attendance_count"/><field name="executed_by_id"/><field name="started_at"/><field name="finished_at"/></group>
+                    </group>
+                    <group string="Resultado">
+                        <field name="attendances_read"/>
+                        <field name="events_detected"/>
+                        <field name="events_created"/>
+                        <field name="events_already_present"/>
+                        <field name="open_attendances"/>
+                    </group>
+                    <group string="Contrato de aislamiento"><field name="operations_log" nolabel="1"/></group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_attendance_sync_run" model="ir.actions.act_window">
+        <field name="name">Sincronizar Asistencias</field>
+        <field name="res_model">test.horas.attendance.sync.run</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_attendance_sync_run" name="Sincronizar Asistencias" parent="ebinox_test_horas.menu_test_horas_operation" action="action_attendance_sync_run" sequence="40" groups="ebinox_test_horas.group_test_horas_manager"/>
+</odoo>
+

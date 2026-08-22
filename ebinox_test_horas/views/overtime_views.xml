@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_overtime_period_tree" model="ir.ui.view">
+        <field name="name">test.horas.overtime.period.tree</field><field name="model">test.horas.overtime.period</field>
+        <field name="arch" type="xml"><list><field name="name"/><field name="company_id"/><field name="date_from"/><field name="date_to"/><field name="calculation_version"/><field name="state"/></list></field>
+    </record>
+    <record id="view_overtime_period_form" model="ir.ui.view">
+        <field name="name">test.horas.overtime.period.form</field><field name="model">test.horas.overtime.period</field>
+        <field name="arch" type="xml"><form delete="false"><header><button name="action_submit" type="object" string="Enviar a autorizar"/><button name="action_approve" type="object" string="Autorizar" groups="ebinox_test_horas.group_test_horas_supervisor"/><field name="state" widget="statusbar"/></header><sheet><group><group><field name="name"/><field name="company_id"/><field name="date_from"/><field name="date_to"/></group><group><field name="calculation_version"/><field name="submitted_by_id"/><field name="submitted_at"/><field name="approved_by_id"/><field name="approved_at"/></group></group><field name="approval_reason"/><notebook><page string="Detalle"><field name="line_ids"><list editable="bottom"><field name="date"/><field name="employee_id"/><field name="workday_id"/><field name="detected_excess_min"/><field name="excluded"/><field name="exclusion_reason"/><field name="payable_50_diurnal_min"/><field name="payable_50_nocturnal_min"/><field name="payable_100_diurnal_min"/><field name="payable_100_nocturnal_min"/></list></field></page></notebook></sheet></form></field>
+    </record>
+    <record id="view_overtime_valuation_tree" model="ir.ui.view">
+        <field name="name">test.horas.overtime.valuation.tree</field><field name="model">test.horas.overtime.valuation</field>
+        <field name="arch" type="xml"><list><field name="valuation_date"/><field name="employee_id"/><field name="period_id"/><field name="source_hour_value"/><field name="raw_amount"/><field name="rounded_amount"/><field name="state"/></list></field>
+    </record>
+    <record id="view_overtime_valuation_form" model="ir.ui.view">
+        <field name="name">test.horas.overtime.valuation.form</field><field name="model">test.horas.overtime.valuation</field>
+        <field name="arch" type="xml"><form delete="false"><sheet><group><group><field name="employee_id"/><field name="period_id"/><field name="valuation_date"/><field name="source_hour_value"/></group><group><field name="rule_version"/><field name="base_factor"/><field name="overtime_50_factor"/><field name="overtime_100_factor"/><field name="nocturnal_factor"/></group></group><group><field name="raw_amount"/><field name="rounded_amount"/><field name="state"/><field name="authorization_reference"/><field name="payment_reference"/></group></sheet></form></field>
+    </record>
+    <record id="action_overtime_period" model="ir.actions.act_window"><field name="name">Períodos de horas extra</field><field name="res_model">test.horas.overtime.period</field><field name="view_mode">list,form</field></record>
+    <record id="action_overtime_valuation" model="ir.actions.act_window"><field name="name">Valorizaciones</field><field name="res_model">test.horas.overtime.valuation</field><field name="view_mode">list,form</field></record>
+    <record id="view_overtime_line_pivot" model="ir.ui.view">
+        <field name="name">test.horas.overtime.line.pivot</field>
+        <field name="model">test.horas.overtime.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Análisis privado de horas extra">
+                <field name="employee_id" type="row"/>
+                <field name="date" type="col" interval="month"/>
+                <field name="detected_excess_min" type="measure"/>
+                <field name="payable_50_diurnal_min" type="measure"/>
+                <field name="payable_50_nocturnal_min" type="measure"/>
+                <field name="payable_100_diurnal_min" type="measure"/>
+                <field name="payable_100_nocturnal_min" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_overtime_line_graph" model="ir.ui.view">
+        <field name="name">test.horas.overtime.line.graph</field>
+        <field name="model">test.horas.overtime.line</field>
+        <field name="arch" type="xml">
+            <graph string="Horas extra liquidables" type="bar" stacked="1">
+                <field name="date" interval="month"/>
+                <field name="payable_50_diurnal_min" type="measure"/>
+                <field name="payable_50_nocturnal_min" type="measure"/>
+                <field name="payable_100_diurnal_min" type="measure"/>
+                <field name="payable_100_nocturnal_min" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="action_overtime_analysis" model="ir.actions.act_window">
+        <field name="name">Análisis de horas extra</field>
+        <field name="res_model">test.horas.overtime.line</field>
+        <field name="view_mode">pivot,graph,list</field>
+    </record></odoo>
+

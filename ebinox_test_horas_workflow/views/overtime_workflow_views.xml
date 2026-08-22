@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_overtime_period_form_workflow" model="ir.ui.view">
+        <field name="name">test.horas.overtime.period.form.workflow</field><field name="model">test.horas.overtime.period</field><field name="inherit_id" ref="ebinox_test_horas.view_overtime_period_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before"><button name="action_generate_lines" type="object" string="Generar detalle"/><button name="action_mark_valued" type="object" string="Marcar valorizado" groups="ebinox_test_horas.group_test_horas_payroll"/></xpath>
+            <xpath expr="//field[@name='line_ids']/list/field[@name='detected_excess_min']" position="after"><field name="active"/><field name="raw_50_diurnal_min"/><field name="raw_50_nocturnal_min"/><field name="raw_100_diurnal_min"/><field name="raw_100_nocturnal_min"/></xpath>
+            <xpath expr="//field[@name='approval_reason']" position="after"><group string="Snapshot de autorización"><field name="authorization_input_hash"/><field name="authorization_snapshot" nolabel="1"/></group></xpath>
+        </field>
+    </record>
+    <record id="view_overtime_valuation_form_workflow" model="ir.ui.view">
+        <field name="name">test.horas.overtime.valuation.form.workflow</field><field name="model">test.horas.overtime.valuation</field><field name="inherit_id" ref="ebinox_test_horas.view_overtime_valuation_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before"><header><button name="action_compute_valuation" type="object" string="Calcular valorización" class="oe_highlight"/><button name="action_mark_pending" type="object" string="Marcar pendiente"/><button name="action_mark_paid" type="object" string="Marcar pago"/><field name="state" widget="statusbar"/></header></xpath>
+            <xpath expr="//field[@name='raw_amount']" position="before"><field name="amount_50_diurnal"/><field name="amount_50_nocturnal"/><field name="amount_100_diurnal"/><field name="amount_100_nocturnal"/></xpath>
+            <xpath expr="//field[@name='payment_reference']" position="after"><field name="valuation_input_hash"/><field name="valuation_snapshot"/></xpath>
+        </field>
+    </record>
+</odoo>
+

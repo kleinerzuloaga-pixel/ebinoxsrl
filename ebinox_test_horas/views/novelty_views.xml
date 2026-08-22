@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_daily_novelty_tree" model="ir.ui.view">
+        <field name="name">test.horas.daily.novelty.tree</field>
+        <field name="model">test.horas.daily.novelty</field>
+        <field name="arch" type="xml">
+            <list><field name="date"/><field name="employee_id"/><field name="novelty_type_id"/><field name="reason"/><field name="state"/></list>
+        </field>
+    </record>
+    <record id="view_daily_novelty_form" model="ir.ui.view">
+        <field name="name">test.horas.daily.novelty.form</field>
+        <field name="model">test.horas.daily.novelty</field>
+        <field name="arch" type="xml">
+            <form delete="false">
+                <header>
+                    <button name="action_submit" type="object" string="Presentar" groups="ebinox_test_horas.group_test_horas_operator"/>
+                    <button name="action_approve" type="object" string="Aprobar" groups="ebinox_test_horas.group_test_horas_supervisor"/>
+                    <button name="action_reject" type="object" string="Rechazar" groups="ebinox_test_horas.group_test_horas_supervisor"/>
+                    <button name="action_cancel" type="object" string="Anular" groups="ebinox_test_horas.group_test_horas_supervisor"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet><group><group><field name="employee_id"/><field name="date"/><field name="novelty_type_id"/><field name="workday_id"/></group><group><field name="document_reference"/><field name="submitted_by_id"/><field name="submitted_at"/><field name="approved_by_id"/><field name="approved_at"/></group></group><group><field name="reason"/><field name="rejection_reason"/></group></sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_novelty_type_tree" model="ir.ui.view">
+        <field name="name">test.horas.novelty.type.tree</field>
+        <field name="model">test.horas.novelty.type</field>
+        <field name="arch" type="xml">
+            <list><field name="sequence" widget="handle"/><field name="code"/><field name="name"/><field name="company_id"/><field name="unit"/><field name="counts_for_absenteeism"/><field name="active"/></list>
+        </field>
+    </record>
+    <record id="view_novelty_type_form" model="ir.ui.view">
+        <field name="name">test.horas.novelty.type.form</field>
+        <field name="model">test.horas.novelty.type</field>
+        <field name="arch" type="xml">
+            <form><sheet><group><group><field name="code"/><field name="name"/><field name="company_id"/><field name="active"/></group><group><field name="unit"/><field name="valid_from"/><field name="valid_to"/><field name="requires_document"/></group></group><group string="Tratamiento"><field name="counts_as_presence"/><field name="counts_for_agreed_hours"/><field name="subtracts_from_agreed_hours"/><field name="counts_for_absenteeism"/></group><field name="notes"/></sheet></form>
+        </field>
+    </record>
+    <record id="action_daily_novelty" model="ir.actions.act_window"><field name="name">Novedades diarias</field><field name="res_model">test.horas.daily.novelty</field><field name="view_mode">list,form</field></record>
+    <record id="action_novelty_type" model="ir.actions.act_window"><field name="name">Tipos de novedad</field><field name="res_model">test.horas.novelty.type</field><field name="view_mode">list,form</field></record>
+</odoo>
+

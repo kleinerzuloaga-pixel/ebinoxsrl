@@ -1,0 +1,25 @@
+{
+    "name": "Ebinox - Novedades y Horas",
+    "summary": "Control auditable de fichadas, novedades, horas extra y valorización",
+    "category": "Human Resources/Attendances",
+    "license": "LGPL-3",
+    "author": "Ebinox",
+    "version": "19.0.1.0.0",
+    "depends": ["base", "hr"],
+    "data": [
+        "security/test_horas_security.xml",
+        "security/ir.model.access.csv",
+        "views/audit_event_views.xml",
+        "views/clock_event_views.xml",
+        "views/workday_views.xml",
+        "views/novelty_views.xml",
+        "views/novelty_evidence_views.xml",
+        "views/overtime_views.xml",
+        "views/menus.xml",
+    ],
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+    "pre_init_hook": "pre_init_hook",
+}
+

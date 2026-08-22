@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_workday_form_calculation" model="ir.ui.view">
+        <field name="name">test.horas.workday.form.calculation</field>
+        <field name="model">test.horas.workday</field>
+        <field name="inherit_id" ref="ebinox_test_horas.view_workday_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_snapshot_schedule" type="object" string="Tomar horario Odoo" groups="ebinox_test_horas.group_test_horas_operator"/>
+                <button name="action_calculate_test_horas" type="object" string="Calcular" class="oe_highlight" groups="ebinox_test_horas.group_test_horas_operator"/>
+            </xpath>
+            <xpath expr="//sheet/notebook" position="before">
+                <group string="Entrada del motor">
+                    <group>
+                        <field name="schedule_start_hour" widget="float_time"/>
+                        <field name="schedule_end_hour" widget="float_time"/>
+                        <field name="schedule_timezone"/>
+                        <field name="schedule_snapshot_source"/>
+                        <field name="schedule_segments_json" readonly="1"/>
+                        <field name="day_regime"/>
+                    </group>
+                    <group>
+                        <field name="assume_theoretical"/>
+                        <field name="justified_absence"/>
+                        <field name="overtime_authorized"/>
+                        <field name="overtime_excluded"/>
+                        <field name="overtime_exclusion_reason"/>
+                    </group>
+                </group>
+                <group string="Política versionada">
+                    <group><field name="tardiness_policy"/><field name="saturday_policy"/></group>
+                    <group><field name="rule_company_code"/><field name="schedule_code"/></group>
+                </group>
+                <group string="Detalle auditable del cálculo">
+                    <group><field name="first_hour_penalty_min"/><field name="unliquidated_overtime_min"/><field name="calculation_input_hash"/></group>
+                    <group><field name="raw_50_diurnal_min"/><field name="raw_50_nocturnal_min"/><field name="raw_100_diurnal_min"/><field name="raw_100_nocturnal_min"/></group>
+                </group>
+                <group string="Snapshot de entrada"><field name="calculation_input_snapshot" nolabel="1"/></group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+

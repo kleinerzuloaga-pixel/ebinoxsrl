@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_novelty_batch_wizard_form" model="ir.ui.view">
+        <field name="name">test.horas.novelty.batch.wizard.form</field>
+        <field name="model">test.horas.novelty.batch.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Carga masiva de novedades" delete="false">
+                <group>
+                    <group>
+                        <field name="company_id"/>
+                        <field name="employee_ids" widget="many2many_tags"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="novelty_type_id"/>
+                        <field name="document_reference"/>
+                        <field name="submit_created"/>
+                        <field name="state"/>
+                    </group>
+                </group>
+                <group string="Días incluidos" col="7">
+                    <field name="monday"/><field name="tuesday"/><field name="wednesday"/>
+                    <field name="thursday"/><field name="friday"/><field name="saturday"/>
+                    <field name="sunday"/>
+                </group>
+                <field name="reason"/>
+                <group invisible="state != 'done'">
+                    <field name="created_count"/><field name="skipped_count"/>
+                    <field name="operations_log"/>
+                </group>
+                <footer>
+                    <button name="action_generate" type="object" string="Generar novedades" class="oe_highlight" invisible="state != 'draft'"/>
+                    <button string="Cerrar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_novelty_batch_wizard" model="ir.actions.act_window">
+        <field name="name">Carga masiva de novedades</field>
+        <field name="res_model">test.horas.novelty.batch.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_novelty_batch_wizard" name="Carga masiva" parent="ebinox_test_horas.menu_test_horas_operation" action="action_novelty_batch_wizard" sequence="25" groups="ebinox_test_horas.group_test_horas_operator"/>
+</odoo>
